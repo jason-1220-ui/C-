@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+/*
 class Date{
 	friend ostream& operator<<(ostream &out, const Date &d);
 public:
@@ -43,7 +44,7 @@ public:
 	// 析构函数
 	~Date()
 	{}
-	// 日期+=天数
+	// 日期+=天数  会改变自身的值
 	Date& operator+=(int day) {
 		if (day < 0) {
 			return *this -= _day;
@@ -187,4 +188,30 @@ int main() {
 	cout << "t1 = " << t1 << endl;
 	
 	return 0;
+}
+*/
+
+//静态成员
+class Test {
+public:
+	//Test():m_a(0){}
+	Test():m_b(0){
+	}
+	//静态函数没有this指针
+	static void fun() {//静态函数只能调用静态成员，不能调用普通成员
+		m_a = 0;
+		//show();不能调用
+	}
+	void show() {//普通函数能够调用普通成员和静态成员
+		m_b = 0;
+		m_a = 0;
+		fun();
+	}
+private:
+	static int m_a;//静态成员不能通过参数列表的形式在类体内进行初始化，只能在类外进行初始化
+	int m_b;
+};
+int Test::m_a = 0;//初始化时使用类名+作用域解析符
+void main() {
+	Test t;
 }
