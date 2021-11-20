@@ -21,7 +21,7 @@ namespace bite{
 		typedef ListNode<T>* PNode;
 		typedef ListIterator<T, Ref, Ptr> Self;
 	public:
-		ListIterator(PNode pNode = nullptr):_pNode(nullptr)
+		ListIterator(PNode pNode):_pNode(pNode)
 		{}
 		ListIterator(const Self& l):_pNode(l._pNode)
 		{}
@@ -199,15 +199,22 @@ namespace bite{
 
 int main() {
 	bite::list<int> mylist;
-	mylist.push_back(1);
-	mylist.push_back(2);
-	mylist.push_back(3);
-	mylist.push_back(4);
+	for (int i = 1; i <= 4; ++i)
+		mylist.push_back(i);
+	mylist.push_front(5);
+	mylist.push_front(6);
+	mylist.push_front(7);
 	bite::list<int>::iterator it = mylist.begin();
 	while (it != mylist.end()) {
 		cout << *it << " ";
 		it++;
 	}
+	cout << endl;
+
+	mylist.pop_back();
+	mylist.pop_front();
+	for (auto &e : mylist)
+		cout << e << " ";
 	cout << endl;
 	return 0;
 }
