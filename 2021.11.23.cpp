@@ -2,8 +2,57 @@
 #include <string>
 using namespace std;
 
+//验证回文串[https://leetcode-cn.com/problems/valid-palindrome/submissions/]
+class Solution {
+public:
+	bool IsLetterOrDig(char ch) {
+		return ((ch >= 'A'&&ch <= 'Z') || (ch >= 'a' && ch <= 'z')) || (ch >= '0' && ch <= '9');
+	}
+	void transform(string &s) {
+		for (int i = 0; i < s.size(); ++i) {
+			if (s[i] >= 'A' && s[i] <= 'Z')
+				s[i] += 32;
+		}
+	}
+	bool isPalindrome(string s) {
+		if (s.size() <= 1)
+			return true;
+		transform(s);
+		int left = 0;
+		int right = s.size() - 1;
+		while (left < right) {
+			while (left < right && !IsLetterOrDig(s[left]))
+				left++;
+			while (left < right && !IsLetterOrDig(s[right]))
+				right--;
+			if (s[left] != s[right])
+				return false;
+			left++;
+			right--;
+		}
+		return true;
+	}
+};
+
+//字符串最后一个单词的长度[https://www.nowcoder.com/practice/8c949ea5f36f422594b306a2300315da?tpId=37&&tqId=21224&rp=5&ru=/activity/oj&qru=/ta/huawei/question-ranking]
+/*
+int GetLastWordLen(string &str) {
+	int pos = str.rfind(' ');
+	if (pos == string::npos)
+		return str.size();
+	return str.size() - pos - 1;
+}
+
+int main() {
+	string str;
+	getline(cin, str);
+	cout << GetLastWordLen(str);
+	return 0;
+}*/
+
 //字符串中的第一个唯一字符（返回索引）[https://leetcode-cn.com/problems/first-unique-character-in-a-string/]
 //反向查找法
+/*
 class Solution {
 public:
 	int firstUniqChar(string s) {
@@ -15,7 +64,7 @@ public:
 		}
 		return -1;
 	}
-};
+};*/
 //哈希表
 /*
 class Solution {
