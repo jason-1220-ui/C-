@@ -1,8 +1,97 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
+//把字符串转换成整数[https://www.nowcoder.com/practice/1277c681251b4372bdef344468e4f26e?tpId=13&&tqId=11202&rp=6&ru=/activity/oj&qru=/ta/coding-interviews/question-ranking]
+class Solution {
+public:
+	int StrToInt(string str) {
+		if (str.size() == 0)
+			return 0;
+		int sign = 1;//正数
+		int i = 0;
+		if (str[0] == '+' || str[0] == '-') {
+			if (str[0] == '-')
+				sign = -1;//负数
+			i++;
+		}
+		int num = 0;
+		while (i < str.size()) {
+			if (str[i] < '0' || str[i] > '9')
+				return 0;
+			num = num * 10 + str[i] - '0';
+			i++;
+		}
+		return sign * num;
+	}
+};
+
+//字符串相加[https://leetcode-cn.com/problems/add-strings/submissions/]
+/*
+class Solution {
+public:
+	int AddItem(int a, int b, int &sign) {
+		int sum = a + b + sign;
+		if (sum >= 10) {
+			sum -= 10;
+			sign = 1;
+		}
+		else {
+			sign = 0;
+		}
+		return sum;
+	}
+	string addStrings(string num1, string num2) {
+		reverse(num1.begin(), num1.end());//654
+		reverse(num2.begin(), num2.end());//77
+		int sign = 0;//进位
+		int i = 0, j = 0;
+		int sum;
+		string result;
+		while (i < num1.size() && j < num2.size()) {
+			sum = AddItem(num1[i] - '0', num2[j] - '0', sign);
+			result.push_back(sum + '0');
+			i++;
+			j++;
+		}
+		while (i < num1.size()) {
+			sum = AddItem(num1[i] - '0', 0, sign);
+			result.push_back(sum + '0');
+			i++;
+		}
+		while (j < num2.size()) {
+			sum = AddItem(0, num2[j] - '0', sign);
+			result.push_back(sum + '0');
+			j++;
+		}
+		if (sign > 0) {
+			result.push_back(sign + '0');
+		}
+		reverse(result.begin(), result.end());
+		return result;
+	}
+};*/
+
+//反转字符串[https://leetcode-cn.com/problems/reverse-string/submissions/]
+/*
+class Solution {
+public:
+	void reverseString(vector<char>& s) {
+		int left = 0;
+		int right = s.size() - 1;
+		while (left < right) {
+			char tmp = s[left];
+			s[left] = s[right];
+			s[right] = tmp;
+			left++;
+			right--;
+		}
+	}
+};*/
+
 //验证回文串[https://leetcode-cn.com/problems/valid-palindrome/submissions/]
+/*
 class Solution {
 public:
 	bool IsLetterOrDig(char ch) {
@@ -32,7 +121,7 @@ public:
 		}
 		return true;
 	}
-};
+};*/
 
 //字符串最后一个单词的长度[https://www.nowcoder.com/practice/8c949ea5f36f422594b306a2300315da?tpId=37&&tqId=21224&rp=5&ru=/activity/oj&qru=/ta/huawei/question-ranking]
 /*
