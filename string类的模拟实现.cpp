@@ -114,14 +114,6 @@ namespace bit {
 		const char* c_str()const {
 			return m_str;
 		}
-		char& operator[](int pos) {
-			assert(pos >= 0 && pos < m_size);
-			return m_str[pos];
-		}
-		const char& operator[](int pos)const {
-			assert(pos >= 0 && pos < m_size);
-			return m_str[pos];
-		}
 	public:
 		bool operator<(const string& s) {
 			if (strcmp(m_str, s.m_str) == -1)
@@ -146,6 +138,60 @@ namespace bit {
 		}
 		bool operator!=(const string& s) {
 			return !(*this == s);
+		}
+	public:
+		//返回c在string中第一次出现的位置
+		size_t find(char c, size_t pos = 0)const {
+			for (size_t i = pos; i < m_size; ++i) {
+				if (m_str[i] == c)
+					return i;//找到，返回下标
+			}
+			return -1;//未找到
+		}
+		//返回字串s在string中第一次出现的位置
+		size_t find(const char* s, size_t pos = 0)const {
+			assert(s);
+			assert(pos < m_size);
+			const char* src = m_str + pos;
+			while (*src) {
+				const char* match = s;//如果不匹配，返回字串重新查找
+				const char* cur = src;
+				while (*match && *match == *cur) {
+					++match;
+					++cur;
+				}
+				if (*match == '\0')
+					return src - m_str;
+				else
+					++src;
+			}
+			return -1;
+		}
+		//在pos位置上插入字符c/字符串str，并返回该字符的位置
+		string& insert(size_t pos, char c) {
+			assert(pos <= m_size);
+			if (m_size > m_capacity) {
+				reverse(m_capacity == 0 ? 1 : m_capacity * 2);
+			}
+			for (int i = m_size; i >= (int)pos; --i) {
+				m_str[i + 1] = m_str[i];
+			}
+			m_str[pos] = c;
+			m_size++;
+			return *this;
+		}
+		//删除pos位置上的元素，并返回该元素的下一个位置
+		string& erase(size_t pos, size_t len) {
+			assert(pos < m_size);
+			if (pos + len >= m_size) {
+				m_str[pos] = '\0';
+				m_size = pos;
+			}
+			else {
+				strcpy(m_str + pos, m_str + pos + len);
+				m_size -= len;
+			}
+			return *this;
 		}
 	private:
 		char *m_str;
