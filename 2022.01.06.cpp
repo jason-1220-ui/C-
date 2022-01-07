@@ -3,6 +3,72 @@ using namespace std;
 
 class Base {
 public:
+	Base(int a) {
+		cout << "Base::Base()" << endl;
+	}
+	Base(const Base &b) {
+		cout << "Base::Base(const Base &)" << endl;
+	}
+	Base& operator=(const Base &b) {
+		cout << "Base::operator=(const Base &)" << endl;
+		Base::operator=(b);
+		return *this;
+	}
+};
+
+class D : public Base {
+public:
+	D() : Base(1){
+		cout << "D::D()" << endl;
+	}
+	D(const D &d) : Base(d) {
+		cout << "D::D(const D&)" << endl;
+	}
+	D& operator=(const D &d) {
+		cout << "D::operator=(const D&)" << endl;
+		return *this;
+	}
+};
+
+int main() {
+	D d;
+	D d1 = d;
+	D d2;
+	d2 = d1;
+	return 0;
+}
+
+/*
+class Base {
+public:
+	void fun() {
+		cout << "Base::fun()" << endl;
+	}
+	void fun(int a) {
+		cout << "Base::fun(int)" << endl;
+	}
+};
+
+class D : public Base {
+public:
+	//同名隐藏:子类成员将屏蔽父类同名成员的访问，即在对象调用fun()函数时，调用的是子类的fun()方法
+	void fun() {
+		cout << "D::fun()" << endl;
+	}
+};
+
+int main() {
+	D d;
+	d.fun();
+	//d.fun(1);//不能调用父类中的带参方法
+	d.Base::fun();
+	d.Base::fun(1);
+	return 0;
+}*/
+
+/*
+class Base {
+public:
 	void fun() {
 		cout << "Base::fun()" << endl;
 	}
@@ -31,7 +97,7 @@ int main() {
 	//3.子类对象可以初始化父类的引用
 	Base &rd = d;
 	return 0;
-}
+}*/
 
 /*
 //多继承
